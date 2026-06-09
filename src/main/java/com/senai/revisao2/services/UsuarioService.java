@@ -16,17 +16,37 @@ public class UsuarioService {
         this.repository = repository;
     }
 
-    public boolean realizarLogin(UsuarioDto usuarioDto){
+    public UsuarioDto realizarLogin(UsuarioDto usuarioDto){
 
        Optional<UsuarioEntity> usuarioOP = repository.findByEmailAndSenha(usuarioDto.getEmail(), usuarioDto.getSenha());
 
+       UsuarioDto usuarioDtoRetorno = new UsuarioDto();
+
        if (usuarioOP.isPresent()){
-           //-- achei o usuário e senha
-           return true;
+           usuarioDtoRetorno = converterEntityParaDto(usuarioOP.get());
+           return usuarioDtoRetorno;
        }
 
-       return false;
+        return usuarioDtoRetorno;
+    }
 
+    private UsuarioDto converterEntityParaDto(UsuarioEntity usuario){
+        UsuarioDto usuarioDto = new UsuarioDto();
+
+        usuarioDto.setNome(usuario.getNome());
+        usuarioDto.setEmail(usuario.getEmail());
+
+        return usuarioDto;
+    }
+
+    private UsuarioEntity converterDtoParaEntity(UsuarioDto usuarioDto){
+        UsuarioEntity usuario = new UsuarioEntity();
+
+        usuario.setNome(usuarioDto.getNome());
+        usuario.setEmail(usuarioDto.getEmail());
+        usuario.setSenha(usuarioDto.getSenha());
+
+        return usuario;
     }
 
 }

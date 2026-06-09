@@ -26,11 +26,11 @@ public class UsuarioController {
         usuarioDto.setEmail(email);
         usuarioDto.setSenha(senha);
 
-        boolean retorno = service.realizarLogin(usuarioDto);
+        UsuarioDto usuarioDtoRetorno = service.realizarLogin(usuarioDto);
 
-        if (retorno) {
+        if (usuarioDtoRetorno.getNome() !=null) {
 
-            redirectAttributes.addFlashAttribute("usuario", " Bem-vindo João!");
+            redirectAttributes.addFlashAttribute("usuario", " Bem-vindo, " + usuarioDtoRetorno.getNome());
 
             return "redirect:/home";
         }
