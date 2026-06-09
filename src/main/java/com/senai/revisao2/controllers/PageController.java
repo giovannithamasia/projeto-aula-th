@@ -1,8 +1,12 @@
 package com.senai.revisao2.controllers;
 
+import com.senai.revisao2.dtos.UsuarioDto;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class PageController {
@@ -23,7 +27,25 @@ public class PageController {
     }
 
     @GetMapping("/usuariolista")
-    public String usuarios(){
+    public String getUsuarioLista(Model model){
+
+        List<UsuarioDto> usuarioDtoLista = new ArrayList<>();
+
+        UsuarioDto usuario1 = new UsuarioDto();
+
+        usuario1.setSenha("paulo");
+        usuario1.setEmail("paulo@gmail.com");
+
+        UsuarioDto usuario2 = new UsuarioDto();
+
+        usuario1.setSenha("bala");
+        usuario1.setEmail("bala@gmail.com");
+
+        usuarioDtoLista.add(usuario1);
+        usuarioDtoLista.add(usuario2);
+
+        model.addAttribute("usuarios",usuarioDtoLista);
+
         return "usuariolista";
     }
 }
