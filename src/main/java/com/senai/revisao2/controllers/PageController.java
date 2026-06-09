@@ -28,18 +28,21 @@ public class PageController {
 
     @GetMapping("/usuariolista")
     public String getUsuarioLista(Model model){
-
         List<UsuarioDto> usuarioDtoLista = new ArrayList<>();
 
         UsuarioDto usuario1 = new UsuarioDto();
 
+        usuario1.setId(1L);
+        usuario1.setNome("Paulo");
         usuario1.setSenha("paulo");
         usuario1.setEmail("paulo@gmail.com");
 
         UsuarioDto usuario2 = new UsuarioDto();
 
-        usuario1.setSenha("bala");
-        usuario1.setEmail("bala@gmail.com");
+        usuario2.setId(2L);
+        usuario2.setNome("Bento");
+        usuario2.setSenha("bento");
+        usuario2.setEmail("bento@gmail.com");
 
         usuarioDtoLista.add(usuario1);
         usuarioDtoLista.add(usuario2);
