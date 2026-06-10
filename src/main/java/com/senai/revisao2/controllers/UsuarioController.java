@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -55,6 +56,24 @@ public class UsuarioController {
 
         usuarioService.inserirUsuario(usuarioDto);
         redirectAttributes.addFlashAttribute("mensagem", "Usuario cadastrado com sucesso");
+
+        return "redirect:/usuariolista";
+    }
+
+    @PostMapping("/usuarioatualizar/{id}")
+    public String atualizarUsuario(@PathVariable("id") Long id,
+                                   @ModelAttribute("usuario") UsuarioDto dto,
+                                   BindingResult bindingResult,
+                                   RedirectAttributes redirectAttributes,
+                                   Model model){
+
+        if (bindingResult.hasErrors()){
+            return "usuarioatualizar";
+        }
+
+        model.addAttribute("id",id);
+        usuarioService.atualizarUsuario(dto);
+        redirectAttributes.addFlashAttribute("mensagemAtualizacao", "Usuario atualizado com sucesso");
 
         return "redirect:/usuariolista";
     }

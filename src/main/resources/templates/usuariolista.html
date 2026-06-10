@@ -45,6 +45,10 @@
         Usuario salvo com sucesso.
     </div>
 
+    <div class="alert alert-success" role="alert" th:if="${mensagemAtualizacao}" th:text="${mensagemAtualizacao}">
+        Usuario atualizado com sucesso.
+    </div>
+
     <div class="card shadow-sm">
         <div class="card-body">
             <div class="table-responsive">
@@ -63,7 +67,7 @@
                         <td th:text="${usuario.nome}">Maria Silva</td>
                         <td th:text="${usuario.email}">maria@email.com</td>
                         <td class="text-end">
-                            <a class="btn btn-sm btn-outline-primary" th:href="@{/usuarios/atualizar/{id}(id=${usuario.id})}">Editar</a>
+                            <a class="btn btn-sm btn-outline-primary" th:href="@{/usuarioatualizar/{id}(id=${usuario.id})}">Editar</a>
                             <a class="btn btn-sm btn-outline-danger" th:href="@{/usuarios/excluir/{id}(id=${usuario.id})}" onclick="return confirm('Deseja excluir este usuario?')">Excluir</a>
                         </td>
                     </tr>

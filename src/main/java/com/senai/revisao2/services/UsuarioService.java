@@ -47,6 +47,10 @@ public class UsuarioService {
         repository.save(converterDtoParaEntity(usuarioDto));
     }
 
+    public void atualizarUsuario(UsuarioDto usuarioDto){
+        repository.save(converterDtoParaEntity(usuarioDto));
+    }
+
     private UsuarioDto converterEntityParaDto(UsuarioEntity usuario){
         UsuarioDto usuarioDto = new UsuarioDto();
 

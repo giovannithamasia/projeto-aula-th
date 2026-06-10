@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -47,5 +48,13 @@ public class PageController {
         UsuarioDto dto = new UsuarioDto();
         model.addAttribute("usuario",dto);
         return "usuarioinserir";
+    }
+
+    @GetMapping("/usuarioatualizar/{id}")
+    public String getAtualizarUsuario(@PathVariable("id") Long id,
+                                      Model model){
+        UsuarioDto dto = new UsuarioDto();
+        model.addAttribute("usuario",dto);
+        return "usuarioatualizar";
     }
 }
