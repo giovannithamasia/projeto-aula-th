@@ -1,15 +1,22 @@
 package com.senai.revisao2.controllers;
 
 import com.senai.revisao2.dtos.UsuarioDto;
+import com.senai.revisao2.services.UsuarioService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 public class PageController {
+
+    private final UsuarioService service;
+
+    public PageController(UsuarioService service) {
+        this.service = service;
+    }
 
     @GetMapping("/")
     public String getIndex(){
@@ -28,27 +35,17 @@ public class PageController {
 
     @GetMapping("/usuariolista")
     public String getUsuarioLista(Model model){
-        List<UsuarioDto> usuarioDtoLista = new ArrayList<>();
-
-        UsuarioDto usuario1 = new UsuarioDto();
-
-        usuario1.setId(1L);
-        usuario1.setNome("Paulo");
-        usuario1.setSenha("paulo");
-        usuario1.setEmail("paulo@gmail.com");
-
-        UsuarioDto usuario2 = new UsuarioDto();
-
-        usuario2.setId(2L);
-        usuario2.setNome("Bento");
-        usuario2.setSenha("bento");
-        usuario2.setEmail("bento@gmail.com");
-
-        usuarioDtoLista.add(usuario1);
-        usuarioDtoLista.add(usuario2);
+        List<UsuarioDto> usuarioDtoLista =  service.obterListaUsuarios();
 
         model.addAttribute("usuarios",usuarioDtoLista);
 
         return "usuariolista";
+    }
+
+    @GetMapping("/usuarioinserir")
+    public String getUsuarioInserir(Model model){
+        UsuarioDto dto = new UsuarioDto();
+        model.addAttribute("usuario",dto);
+        return "usuarioinserir";
     }
 }

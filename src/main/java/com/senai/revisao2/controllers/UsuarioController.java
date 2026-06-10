@@ -2,18 +2,21 @@ package com.senai.revisao2.controllers;
 
 import com.senai.revisao2.dtos.*;
 import com.senai.revisao2.services.UsuarioService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class UsuarioController {
 
-    private final UsuarioService service;
+    private final UsuarioService usuarioService;
 
-    public UsuarioController(UsuarioService service) {
-        this.service = service;
+    public UsuarioController(UsuarioService usuarioService) {
+        this.usuarioService = usuarioService;
     }
 
     @PostMapping("/login")
@@ -26,7 +29,7 @@ public class UsuarioController {
         usuarioDto.setEmail(email);
         usuarioDto.setSenha(senha);
 
-        UsuarioDto usuarioDtoRetorno = service.realizarLogin(usuarioDto);
+        UsuarioDto usuarioDtoRetorno = usuarioService.realizarLogin(usuarioDto);
 
         if (usuarioDtoRetorno.getNome() !=null) {
 
@@ -39,6 +42,21 @@ public class UsuarioController {
 
         return "login";
 
+    }
+
+    @PostMapping("/usuarioinserir")
+    public String inserirUsuario(@Valid @ModelAttribute("usuario") UsuarioDto usuarioDto,
+                                 BindingResult bindingResult,
+                                 RedirectAttributes redirectAttributes){
+
+        if (bindingResult.hasErrors()){
+            return "usuarioinserir";
+        }
+
+        usuarioService.inserirUsuario(usuarioDto);
+        redirectAttributes.addFlashAttribute("mensagem", "Usuario cadastrado com sucesso");
+
+        return "redirect:/usuariolista";
     }
 
 }

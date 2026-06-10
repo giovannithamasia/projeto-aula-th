@@ -5,6 +5,8 @@ import com.senai.revisao2.entities.UsuarioEntity;
 import com.senai.revisao2.repositories.UsuarioRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -30,9 +32,25 @@ public class UsuarioService {
         return usuarioDtoRetorno;
     }
 
+    public List<UsuarioDto> obterListaUsuarios(){
+        List<UsuarioEntity> listaUsuario = repository.findAll();
+        List<UsuarioDto> listaDtos = new ArrayList<>();
+
+        for(UsuarioEntity usuario : listaUsuario){
+            listaDtos.add(converterEntityParaDto(usuario));
+        }
+
+        return listaDtos;
+    }
+
+    public void inserirUsuario(UsuarioDto usuarioDto){
+        repository.save(converterDtoParaEntity(usuarioDto));
+    }
+
     private UsuarioDto converterEntityParaDto(UsuarioEntity usuario){
         UsuarioDto usuarioDto = new UsuarioDto();
 
+        usuarioDto.setId(usuario.getId());
         usuarioDto.setNome(usuario.getNome());
         usuarioDto.setEmail(usuario.getEmail());
 
@@ -42,11 +60,11 @@ public class UsuarioService {
     private UsuarioEntity converterDtoParaEntity(UsuarioDto usuarioDto){
         UsuarioEntity usuario = new UsuarioEntity();
 
+        usuario.setId(usuarioDto.getId());
         usuario.setNome(usuarioDto.getNome());
         usuario.setEmail(usuarioDto.getEmail());
         usuario.setSenha(usuarioDto.getSenha());
 
         return usuario;
     }
-
 }
