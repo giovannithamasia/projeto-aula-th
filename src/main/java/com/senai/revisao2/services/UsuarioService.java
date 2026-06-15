@@ -47,7 +47,9 @@ public class UsuarioService {
         repository.save(converterDtoParaEntity(usuarioDto));
     }
 
-    public void atualizarUsuario(UsuarioDto usuarioDto){
+    public void atualizarUsuario(Long id,UsuarioDto usuarioDto){
+        usuarioDto.setId(id);
+
         repository.save(converterDtoParaEntity(usuarioDto));
     }
 
