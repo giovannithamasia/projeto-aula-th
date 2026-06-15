@@ -47,10 +47,37 @@ public class UsuarioService {
         repository.save(converterDtoParaEntity(usuarioDto));
     }
 
-    public void atualizarUsuario(Long id,UsuarioDto usuarioDto){
-        usuarioDto.setId(id);
+    public UsuarioDto obterUsuarioPorId(Long id){
+        UsuarioDto usuarioDto = new UsuarioDto();
 
-        repository.save(converterDtoParaEntity(usuarioDto));
+        Optional<UsuarioEntity> usuarioOP = repository.findById(id);
+
+        if (usuarioOP.isPresent()){
+            usuarioDto = converterEntityParaDto(usuarioOP.get());
+        }
+
+        return usuarioDto;
+    }
+
+
+    public void atualizarUsuario(UsuarioDto usuarioDto){
+
+        Optional<UsuarioEntity> usuarioOP = repository.findById(usuarioDto.getId());
+
+        if (usuarioOP.isPresent()){
+            UsuarioEntity usuario = usuarioOP.get();
+
+            usuario.setNome(usuarioDto.getNome());
+            usuario.setEmail(usuarioDto.getEmail());
+
+            if (!usuarioDto.getSenha().isEmpty()){
+                usuario.setSenha(usuarioDto.getSenha());
+            }
+
+            repository.save(usuario);
+
+        }
+
     }
 
     private UsuarioDto converterEntityParaDto(UsuarioEntity usuario){

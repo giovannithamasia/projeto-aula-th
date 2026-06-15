@@ -60,8 +60,8 @@ public class UsuarioController {
         return "redirect:/usuariolista";
     }
 
-    @PostMapping("/usuarioatualizar/{id}")
-    public String atualizarUsuario(@PathVariable("id") Long id,
+    @PostMapping("/usuarioatualizar")
+    public String atualizarUsuario(Model model,
                                    @Valid @ModelAttribute("usuario") UsuarioDto dto,
                                    BindingResult bindingResult,
                                    RedirectAttributes redirectAttributes){
@@ -70,7 +70,7 @@ public class UsuarioController {
             return "usuarioatualizar";
         }
 
-        usuarioService.atualizarUsuario(id, dto);
+        usuarioService.atualizarUsuario(dto);
         redirectAttributes.addFlashAttribute("mensagemAtualizacao", "Usuario atualizado com sucesso");
 
         return "redirect:/usuariolista";

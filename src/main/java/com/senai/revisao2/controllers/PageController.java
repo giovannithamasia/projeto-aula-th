@@ -53,7 +53,7 @@ public class PageController {
     @GetMapping("/usuarioatualizar/{id}")
     public String getAtualizarUsuario(@PathVariable("id") Long id,
                                       Model model){
-        UsuarioDto dto = new UsuarioDto();
+        UsuarioDto dto = service.obterUsuarioPorId(id);
         model.addAttribute("usuario",dto);
         return "usuarioatualizar";
     }
