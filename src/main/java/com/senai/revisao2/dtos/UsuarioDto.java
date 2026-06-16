@@ -14,7 +14,6 @@ public class UsuarioDto {
     @Email(message = "Email inválido")
     private String email;
 
-    @NotBlank(message = "A senha não pode estar em branco ou nula")
     private String senha;
 
     public UsuarioDto() {
