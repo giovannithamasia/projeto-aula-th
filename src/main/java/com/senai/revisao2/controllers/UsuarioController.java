@@ -71,7 +71,7 @@ public class UsuarioController {
         }
 
         usuarioService.atualizarUsuario(dto);
-        redirectAttributes.addFlashAttribute("mensagemAtualizacao", "Usuario atualizado com sucesso");
+        redirectAttributes.addFlashAttribute("mensagemAtualizacao", "Usuario atualizado com sucesso!");
 
         return "redirect:/usuariolista";
     }

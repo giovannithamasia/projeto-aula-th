@@ -60,7 +60,7 @@
 
                         <div class="mb-3">
                             <label for="senha" class="form-label">Senha</label>
-                            <input type="password" class="form-control" id="senha" th:field="*{senha}" placeholder="Digite a senha" required>
+                            <input type="password" class="form-control" id="senha" th:field="*{senha}" placeholder="Digite a senha">
                             <div class="text-danger small mt-1" th:if="${#fields.hasErrors('senha')}" th:errors="*{senha}">Erro na senha</div>
                         </div>
 
