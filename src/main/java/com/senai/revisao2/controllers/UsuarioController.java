@@ -78,7 +78,7 @@ public class UsuarioController {
         return "redirect:/usuariolista";
     }
 
-    @DeleteMapping("/excluir/{id}")
+    @DeleteMapping("/usuarioexcluir/{id}")
     public ResponseEntity<String> excluir(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         usuarioService.excluir(id);
         return ResponseEntity.ok().body("Excluido");
