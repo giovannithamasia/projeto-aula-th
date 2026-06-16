@@ -80,6 +80,10 @@ public class UsuarioService {
 
     }
 
+    public void excluir(Long id){
+        repository.deleteById(id);
+    }
+
     private UsuarioDto converterEntityParaDto(UsuarioEntity usuario){
         UsuarioDto usuarioDto = new UsuarioDto();
 
