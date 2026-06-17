@@ -23,7 +23,7 @@ public class ProdutoService {
     }
 
     public void inserirProduto(ProdutoDto produtoDto){
-
+        repository.save(produtoDto.toEntity());
     }
 
 

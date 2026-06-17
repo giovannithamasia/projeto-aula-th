@@ -1,10 +1,12 @@
 package com.senai.revisao2.controllers;
 
 import com.senai.revisao2.dtos.ProdutoDto;
+import com.senai.revisao2.dtos.UsuarioDto;
 import com.senai.revisao2.services.ProdutoService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.util.List;
 
@@ -24,5 +26,11 @@ public class ProdutoPageController {
         model.addAttribute("listaProdutos",listaProdutos);
 
         return "produtos/produtolista";
+    }
+
+    @GetMapping("/produtocadastrar")
+    public String getProdutoCadastrar(@ModelAttribute("produto")
+                                          ProdutoDto produtoDto){
+        return "produtos/produtocadastrar";
     }
 }

@@ -29,7 +29,7 @@ public record ProdutoDto (
 
 ){
 
-    public ProdutoEntity toEntity(ProdutoDto produtoDto){
+    public ProdutoEntity toEntity(){
         ProdutoEntity produtoEntity = new ProdutoEntity();
 
         produtoEntity.setIdProduto(this.idProduto);
