@@ -4,9 +4,13 @@ import com.senai.revisao2.dtos.ProdutoDto;
 import com.senai.revisao2.dtos.UsuarioDto;
 import com.senai.revisao2.services.ProdutoService;
 import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -34,5 +38,32 @@ public class ProdutoController {
 
 
         return "redirect:/produtolista";
+    }
+
+    @PostMapping("/produtoatualizar")
+    public String atualizarProduto(Model model,
+                                   @Valid @ModelAttribute("produtoAtualizar") ProdutoDto dto,
+                                   BindingResult bindingResult,
+                                   RedirectAttributes redirectAttributes) {
+
+        if (bindingResult.hasErrors()) {
+            return "produtos/produtoatualizar";
+        }
+
+        try {
+            service.atualizarProduto(dto);
+            redirectAttributes.addFlashAttribute("mensagemAtualizacao", "Produto atualizado com sucesso!");
+            return "redirect:/produtolista";
+        } catch (RuntimeException ex) {
+            model.addAttribute("NotFound",ex.getMessage());
+            return "produtos/produtoatualizar";
+        }
+
+    }
+
+    @DeleteMapping("/produto/{id}")
+    public ResponseEntity<String> excluir(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        service.removerProduto(id);
+        return ResponseEntity.ok().body("Excluido");
     }
 }

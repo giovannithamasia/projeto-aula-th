@@ -45,4 +45,6 @@ public record ProdutoDto (
         return new ProdutoDto(produtoEntity.getIdProduto(),produtoEntity.getNome(),
                 produtoEntity.getDescricao(),produtoEntity.getPreco(),produtoEntity.getQuantidadeEstoque());
     }
+
+
 }

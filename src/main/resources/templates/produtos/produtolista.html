@@ -52,6 +52,8 @@
         Produto atualizado com sucesso!
     </div>
 
+    <div th:if="${NotFound}" class="alert alert-danger" role="alert" th:text="${NotFound}">
+    </div>
 
     <div class="card shadow-sm">
         <div class="card-body">
@@ -90,8 +92,7 @@
     </div>
 </main>
 
-<!-- Inclua o script do excluir_usuario.js -->
-<script src="/excluir_usuario.js"></script>
+<script src="/excluir_produto.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
