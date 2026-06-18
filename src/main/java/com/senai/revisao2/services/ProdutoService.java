@@ -23,7 +23,7 @@ public class ProdutoService {
                 .toList();
     }
 
-    public void inserirProduto(ProdutoDto produtoDto){
+    public void cadastrarProduto(ProdutoDto produtoDto){
         repository.save(produtoDto.toEntity());
     }
 
@@ -34,8 +34,8 @@ public class ProdutoService {
         return ProdutoDto.toDto(produtoEntity);
     }
 
-    public void atualizarProduto(ProdutoDto produtoDto){
-        ProdutoEntity produtoEntity = repository.findById(produtoDto.idProduto())
+    public void atualizarProduto(Long id,ProdutoDto produtoDto){
+        ProdutoEntity produtoEntity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
 
         produtoEntity.setNome(produtoDto.nome());

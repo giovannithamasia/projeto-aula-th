@@ -61,7 +61,6 @@
                 <table class="table table-striped table-hover align-middle mb-0">
                     <thead class="table-primary">
                     <tr>
-                        <th scope="col">ID</th>
                         <th scope="col">Nome</th>
                         <th scope="col">Descrição</th>
                         <th scope="col">Preço</th>
@@ -71,7 +70,6 @@
                     </thead>
                     <tbody>
                     <tr th:each="produto : ${listaProdutos}">
-                        <td th:text="${produto.idProduto}">1</td>
                         <td th:text="${produto.nome}">bala</td>
                         <td th:text="${produto.descricao}">bala de goma</td>
                         <td th:text="${produto.preco}">10.00</td>

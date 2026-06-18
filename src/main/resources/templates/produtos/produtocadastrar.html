@@ -46,7 +46,7 @@
 
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <form th:action="@{/produto}" th:object="${produto}" method="post">
+                    <form th:action="@{/produto}" th:object="${produto}" method="post" novalidate>
                         <div class="mb-3">
                             <label for="nome" class="form-label">Nome</label>
                             <input type="text" class="form-control" id="nome" th:field="*{nome}" placeholder="Digite o nome do produto" required>

@@ -1,16 +1,13 @@
 package com.senai.revisao2.dtos;
 
 import com.senai.revisao2.entities.ProdutoEntity;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
 
 public record ProdutoDto (
 
-     Long idProduto,
+    Long idProduto,
 
     @NotBlank
     @Size(min = 2, max = 100, message = "O nome deve ter entre dois e cem caracteres")
@@ -21,9 +18,9 @@ public record ProdutoDto (
 
     @Positive
     @NotNull
-     BigDecimal preco,
+    BigDecimal preco,
 
-    @Positive
+    @PositiveOrZero
     @NotNull
     Integer quantidadeEstoque
 
@@ -32,7 +29,6 @@ public record ProdutoDto (
     public ProdutoEntity toEntity(){
         ProdutoEntity produtoEntity = new ProdutoEntity();
 
-        produtoEntity.setIdProduto(this.idProduto);
         produtoEntity.setNome(this.nome);
         produtoEntity.setDescricao(this.descricao);
         produtoEntity.setPreco(this.preco);
@@ -45,6 +41,5 @@ public record ProdutoDto (
         return new ProdutoDto(produtoEntity.getIdProduto(),produtoEntity.getNome(),
                 produtoEntity.getDescricao(),produtoEntity.getPreco(),produtoEntity.getQuantidadeEstoque());
     }
-
 
 }

@@ -1,7 +1,6 @@
 package com.senai.revisao2.controllers;
 
 import com.senai.revisao2.dtos.ProdutoDto;
-import com.senai.revisao2.dtos.UsuarioDto;
 import com.senai.revisao2.services.ProdutoService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
