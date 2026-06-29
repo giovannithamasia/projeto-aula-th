@@ -2,6 +2,9 @@ package com.senai.revisao2.controllers;
 
 import com.senai.revisao2.dtos.*;
 import com.senai.revisao2.services.UsuarioService;
+import com.senai.revisao2.sessoes.SessaoDto;
+import com.senai.revisao2.sessoes.SessaoUtil;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -24,26 +27,22 @@ public class UsuarioController {
 
     @PostMapping("/login")
     public String realizarLogin(String email, String senha,
-                                Model model, RedirectAttributes redirectAttributes){
+                                Model model, RedirectAttributes redirectAttributes,
+                                HttpSession session){
 
-        System.out.println("email=" + email + " senha=" + senha);
+        UsuarioDto usuarioDto = usuarioService.realizarLogin(email,senha);
 
-        UsuarioDto usuarioDto = new UsuarioDto();
-        usuarioDto.setEmail(email);
-        usuarioDto.setSenha(senha);
-
-        UsuarioDto usuarioDtoRetorno = usuarioService.realizarLogin(usuarioDto);
-
-        if (usuarioDtoRetorno.getNome() !=null) {
-
-            redirectAttributes.addFlashAttribute("usuario", " Bem-vindo, " + usuarioDtoRetorno.getNome());
-
-            return "redirect:/home";
+        if (usuarioDto ==null) {
+            model.addAttribute("erro","E-mail ou senha invalidos.");
+            return "login";
         }
 
-        model.addAttribute("erro","E-mail ou senha invalidos.");
+        SessaoDto sessaoDto = new SessaoDto();
+        sessaoDto.setUsuarioId(usuarioDto.getId());
+        sessaoDto.setUsuarioNome(usuarioDto.getNome());
+        SessaoUtil.RegistrarSessao(session, sessaoDto);
 
-        return "login";
+        return "redirect:/home";
 
     }
 

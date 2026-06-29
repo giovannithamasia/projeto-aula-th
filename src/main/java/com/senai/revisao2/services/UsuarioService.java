@@ -18,18 +18,15 @@ public class UsuarioService {
         this.repository = repository;
     }
 
-    public UsuarioDto realizarLogin(UsuarioDto usuarioDto){
+    public UsuarioDto realizarLogin(String email, String senha) {
 
-       Optional<UsuarioEntity> usuarioOP = repository.findByEmailAndSenha(usuarioDto.getEmail(), usuarioDto.getSenha());
+        Optional<UsuarioEntity> usuarioOP = repository.findByEmailAndSenha(email, senha);
 
-       UsuarioDto usuarioDtoRetorno = new UsuarioDto();
+        if (usuarioOP.isPresent()){
+            return converterEntityParaDto(usuarioOP.get());
+        }
 
-       if (usuarioOP.isPresent()){
-           usuarioDtoRetorno = converterEntityParaDto(usuarioOP.get());
-           return usuarioDtoRetorno;
-       }
-
-        return usuarioDtoRetorno;
+        return null;
     }
 
     public List<UsuarioDto> obterListaUsuarios(){

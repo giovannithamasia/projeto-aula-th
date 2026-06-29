@@ -2,6 +2,9 @@ package com.senai.revisao2.controllers;
 
 import com.senai.revisao2.dtos.UsuarioDto;
 import com.senai.revisao2.services.UsuarioService;
+import com.senai.revisao2.sessoes.SessaoDto;
+import com.senai.revisao2.sessoes.SessaoUtil;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,7 +32,14 @@ public class PageController {
     }
 
     @GetMapping("/home")
-    public String getHome(){
+    public String getHome(HttpSession session,Model model){
+        SessaoDto sessaoDto = SessaoUtil.ObterSessao(session);
+
+        if (sessaoDto == null){
+            return "redirect:/login";
+        }
+
+        model.addAttribute("usuarioLogado",sessaoDto);
         return "home";
     }
 
