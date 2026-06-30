@@ -6,6 +6,7 @@ import com.senai.revisao2.sessoes.SessaoDto;
 import com.senai.revisao2.sessoes.SessaoUtil;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -49,7 +50,13 @@ public class UsuarioController {
     @PostMapping("/usuarioinserir")
     public String inserirUsuario(@Valid @ModelAttribute("usuario") UsuarioDto usuarioDto,
                                  BindingResult bindingResult,
-                                 RedirectAttributes redirectAttributes){
+                                 RedirectAttributes redirectAttributes,
+                                 HttpSession session){
+
+        SessaoDto sessaoDto = SessaoUtil.ObterSessao(session);
+        if (sessaoDto == null){
+            return "redirect:/login";
+        }
 
         if (bindingResult.hasErrors()){
             return "usuarioinserir";
@@ -65,7 +72,13 @@ public class UsuarioController {
     public String atualizarUsuario(Model model,
                                    @Valid @ModelAttribute("usuario") UsuarioDto dto,
                                    BindingResult bindingResult,
-                                   RedirectAttributes redirectAttributes){
+                                   RedirectAttributes redirectAttributes,
+                                   HttpSession session){
+
+        SessaoDto sessaoDto = SessaoUtil.ObterSessao(session);
+        if (sessaoDto == null){
+            return "redirect:/login";
+        }
 
         if (bindingResult.hasErrors()){
             return "usuarioatualizar";
@@ -78,7 +91,12 @@ public class UsuarioController {
     }
 
     @DeleteMapping("/usuarioexcluir/{id}")
-    public ResponseEntity<String> excluir(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+    public ResponseEntity<String> excluir(@PathVariable Long id, RedirectAttributes redirectAttributes,HttpSession session) {
+        SessaoDto sessaoDto = SessaoUtil.ObterSessao(session);
+        if (sessaoDto == null){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Acesso negado: faça login");
+        }
+
         usuarioService.excluir(id);
         return ResponseEntity.ok().body("Excluido");
     }

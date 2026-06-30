@@ -44,7 +44,15 @@ public class PageController {
     }
 
     @GetMapping("/usuariolista")
-    public String getUsuarioLista(Model model){
+    public String getUsuarioLista(HttpSession session,Model model){
+        SessaoDto sessaoDto = SessaoUtil.ObterSessao(session);
+
+        if (sessaoDto == null){
+            return "redirect:/login";
+        }
+
+        model.addAttribute("usuarioLogado", sessaoDto);
+
         List<UsuarioDto> usuarioDtoLista =  service.obterListaUsuarios();
 
         model.addAttribute("usuarios",usuarioDtoLista);
@@ -53,7 +61,15 @@ public class PageController {
     }
 
     @GetMapping("/usuarioinserir")
-    public String getUsuarioInserir(Model model){
+    public String getUsuarioInserir(HttpSession session,Model model){
+        SessaoDto sessaoDto = SessaoUtil.ObterSessao(session);
+
+        if (sessaoDto == null){
+            return "redirect:/login";
+        }
+
+        model.addAttribute("usuarioLogado", sessaoDto);
+
         UsuarioDto dto = new UsuarioDto();
         model.addAttribute("usuario",dto);
         return "usuarioinserir";
@@ -61,7 +77,16 @@ public class PageController {
 
     @GetMapping("/usuarioatualizar/{id}")
     public String getAtualizarUsuario(@PathVariable("id") Long id,
-                                      Model model){
+                                      Model model,
+                                      HttpSession session){
+        SessaoDto sessaoDto = SessaoUtil.ObterSessao(session);
+
+        if (sessaoDto == null){
+            return "redirect:/login";
+        }
+
+        model.addAttribute("usuarioLogado", sessaoDto);
+
         UsuarioDto dto = service.obterUsuarioPorId(id);
         model.addAttribute("usuario",dto);
         return "usuarioatualizar";
