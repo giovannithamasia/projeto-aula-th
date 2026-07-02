@@ -24,11 +24,5 @@ COPY --from=builder /app/target/*.jar app.jar
 # Expõe a porta utilizada pela aplicação
 EXPOSE 8080
 
-
-ENV SPRING_DATASOURCE_URL=jdbc:mysql://host.docker.internal:3306/revisao2
-ENV SPRING_DATASOURCE_USERNAME=root
-ENV SPRING_DATASOURCE_PASSWORD=
-
-
 # Comando executado ao iniciar o container
 ENTRYPOINT ["java", "-jar", "app.jar"]
